@@ -1,0 +1,12 @@
+
+set(pure_pursuit 1.0.0)
+
+@PACKAGE_INIT@
+
+set_and_check(pure_pursuit_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@")
+set_and_check(pure_pursuit_LIB_INSTALL_DIR "@PACKAGE_LIB_INSTALL_DIR@")
+set_and_check(pure_pursuit_LIBRARIES "@PACKAGE_LIBS@")
+
+check_required_components(pure_pursuit)
+
+
