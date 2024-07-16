@@ -17,30 +17,57 @@
 
 #include <optional>
 #include <vector>
+#include <memory>
 
-/* int findClosestPoint(const Point& current_point, const std::vector<Point>& path, const int previousClosestPointIndex = -1)
+template<typename T>
+int sgn(T num)
 {
-  bool foundClosestPoint = false;
-  while(!foundClosestPoint)
-  {
-    for(std::vector<Point>::const_iterator pathSegmentPointIt = path.begin() + previousClosestPointIndex; pathSegmentPointIt != path.end(); pathSegmentPointIt++)
-    {
-            
-    }
-  }
-} */
-
-std::optional<int> getLookaheadPoint(
-  const double lookahead_distance, 
-  const int closestPointIndex,
-  const std::vector<Point>& path,
-  const Point& current_position  
-)
-{
-  for(std::vector<Point>::const_iterator pointIter = path.cbegin() + closestPointIndex; pointIter != path.cend(); pointIter++)
-  {
-    
-  }
+  return (num < 0 ? -1 : 1);
 }
+
+using Path = std::vector<Point>;
+class PurePursuitController
+{
+  public:
+
+  PurePursuitController() = default;
+
+  ~PurePursuitController() = default;
+
+  struct PurePursuitControllerParams
+  {
+    double lookaheadDistance;
+  };
+
+  std::pair<Path::iterator, Path::iterator> prunePath();
+
+  bool update();
+
+  private:
+
+  bool init(PurePursuitControllerParams params);
+  
+  PurePursuitControllerParams m_ControllerParams;
+
+  std::shared_ptr<Path> m_CurrentPath;
+
+  std::weak_ptr<Point> m_RobotPosition;
+
+  Path getCopyOfCurrentPath() const;
+
+  /**
+   * @brief first: iterator for the closest point
+   * @brief second: calculated distance
+   * 
+   */
+  std::pair<Path::iterator, double> m_PreviousClosestPoint;
+
+  bool findClosestPoint(const Point& robot_position);
+
+  double calculateCurvature(const Point& robot_position);
+
+  std::optional<Point> circleLineSegmentIntercession(const std::pair<Path::iterator, Path::iterator>& segment_points);
+
+};
 
 #endif // PURE_PURSUIT_HPP_

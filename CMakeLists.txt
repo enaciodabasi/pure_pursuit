@@ -5,6 +5,8 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "(GNU|Clang)")
   add_compile_options(-Wall -Wextra -Werror=conversion -Werror=unused-but-set-variable -Werror=return-type)
 endif()
 
+find_package(geometry_utilities REQUIRED)
+
 set(SOURCES
 
 )
